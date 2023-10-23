@@ -20,8 +20,26 @@ const getOneProductDataBase = {
 
 const errorDataBase = undefined;
 
+const getAllDataBaseCreated = {
+  status: 200,
+  data: getAllProductsDataBase,
+};
+
+const getOneDataBaseCreated = {
+  status: 200,
+  data: getOneProductDataBase,
+};
+
+const errorDataBaseCreated = {
+  status: 404,
+  data: errorDataBase,
+};
+
 module.exports = {
   getAllProductsDataBase,
   getOneProductDataBase,
   errorDataBase,
+  getAllDataBaseCreated,
+  getOneDataBaseCreated,
+  errorDataBaseCreated,
 };
