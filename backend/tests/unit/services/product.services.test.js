@@ -40,10 +40,10 @@ describe('Teste Services', function () {
   });
   it('Pegando um product pelo id erro', async function () {
     sinon.stub(productsRoutes, 'getByProductId').resolves(errorDataBase);
-    const inputData = 99999999;
-    const response = await productsServices.getProductById(inputData);
+    const resData = { message: 'Product not found' };
+    const response = await productsServices.getProductById(9999);
     expect(response.status).equal(404);
-    expect(response.message).equal('Product not found');
+    expect(response.data).deep.equal(resData);
   });
   afterEach(function () {
     return sinon.restore();

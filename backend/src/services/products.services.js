@@ -10,8 +10,7 @@ const getProductById = async (id) => {
   if (data === undefined) {
     return {
       status: 404,
-      message: 'Product not found',
-    };
+      data: { message: 'Product not found' } };
   }
   return { status: 200, data };
 };
