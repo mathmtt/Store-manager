@@ -20,7 +20,7 @@ const addproduct = async (name) => {
     const data = { message: '"name" length must be at least 5 characters long' };
     return { status: 422, data };
   }
-  const insertId = await productsRoutes.insertUpdate(name);
+  const insertId = await productsRoutes.productInsert(name);
   const data = await productsRoutes.getByProductId(insertId);
   return { status: 201, data };
 };
