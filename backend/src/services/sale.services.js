@@ -58,4 +58,5 @@ module.exports = {
   getAllSales,
   getSaleById,
   addSale,
+  checkId,
 };

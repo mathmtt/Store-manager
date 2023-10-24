@@ -33,6 +33,13 @@ describe('Teste Model', function () {
     expect(product).an('undefined');
     expect(product).equal(errorDataBase);
   });
+  it('Inserindo um product', async function () {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
+    const inputData = 'Martelo de Thor';
+    const product = await productsRoutes.productInsert(inputData);
+    expect(product).an('number');
+    expect(product).equal(1);
+  });
   afterEach(function () {
     return sinon.restore();
   });

@@ -12,7 +12,7 @@ const getById = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  const { name } = req.body || {};
+  const { name } = req.body;
   if (!name) {
     return res.status(400).json({ message: '"name" is required' });
   }
@@ -20,8 +20,19 @@ const createProduct = async (req, res) => {
   return res.status(status).json(data);
 };
 
+const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ message: '"name" is required' });
+  }
+  const { status, data } = await productsServices.upProduct(id, name);
+  return res.status(status).json(data);
+};
+
 module.exports = {
   getAll,
   getById,
   createProduct,
+  updateProduct,
 };

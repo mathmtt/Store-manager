@@ -1,3 +1,4 @@
+const camelize = require('camelize');
 const connection = require('./connection'); // Supondo que você tenha um arquivo de conexão
 
 const getAll = async () => {
@@ -21,8 +22,17 @@ const productInsert = async (name) => {
   return product.insertId;
 };
 
+const insertUpdate = async (id, name) => {
+  const [result] = await connection.execute(
+    'UPDATE products SET name = ? WHERE id = ?',
+    [name, id],
+  );
+  return camelize(result);
+};
+
 module.exports = {
   getAll,
   getByProductId,
   productInsert,
+  insertUpdate,
 };
