@@ -15,7 +15,18 @@ const getProductById = async (id) => {
   return { status: 200, data };
 };
 
+const addproduct = async (name) => {
+  if (name.length < 5) {
+    const data = { message: '"name" length must be at least 5 characters long' };
+    return { status: 422, data };
+  }
+  const insertId = await productsRoutes.productInsert(name);
+  const data = await productsRoutes.getByProductId(insertId);
+  return { status: 201, data };
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
+  addproduct,
 };

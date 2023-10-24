@@ -60,6 +60,51 @@ describe('Teste Controller', function () {
     expect(res.status).to.be.calledWith(404);
     expect(res.status().json).to.be.calledWith(errorDataBase);
   });
+  it('Criando um product', async function () {
+    sinon.stub(productsServices, 'addproduct').resolves(getOneDataBaseCreated);
+    const req = {
+      body: {
+        name: 'Martelo de Thor',
+      },
+    };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    await productController.createProduct(req, res);
+    expect(res.status).to.be.calledWith(200);
+    expect(res.status().json).to.be.calledWith(getOneProductDataBase);
+  });
+  it('Criando um product erro', async function () {
+    sinon.stub(productsServices, 'addproduct').resolves(errorDataBaseCreated);
+    const req = {
+      body: {
+        name: 'Martelo de Thor',
+      },
+    };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    await productController.createProduct(req, res);
+    expect(res.status).to.be.calledWith(404);
+    expect(res.status().json).to.be.calledWith(errorDataBase);
+  });
+  it('Criando um product sem o name', async function () {
+    sinon.stub(productsServices, 'addproduct').resolves(errorDataBaseCreated);
+    const req = {
+      body: {
+        name: '',
+      },
+    };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    await productController.createProduct(req, res);
+    expect(res.status).to.be.calledWith(400);
+    expect(res.status().json).to.be.calledWith({ message: '"name" is required' });
+  });
   afterEach(function () {
     return sinon.restore();
   });
