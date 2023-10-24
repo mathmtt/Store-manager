@@ -55,6 +55,44 @@ describe('Teste Services Sale', function () {
     expect(response.status).equal(404);
     expect(response.data).deep.equal(responseData);
   });
+  it('Adicionando um sale', async function () {
+    sinon.stub(salesModel, 'insertSale').resolves(1);
+    sinon.stub(salesModel, 'getBySaleId').resolves(getOneSale);
+    sinon.stub(salesModel, 'insertSalesProducts').resolves();
+    const inputData = [
+      {
+        productId: 3,
+        quantity: 15,
+      },
+    ];
+    const responseData = {
+      id: 1,
+      itemsSold: [
+        {
+          productId: 3,
+          quantity: 15,
+        },
+      ],
+    };
+    const response = await salesServices.addSale(inputData);
+    expect(response.status).equal(201);
+    expect(response.data).deep.equal(responseData);
+  });
+  it('Adicionando um sale com erro', async function () {
+    sinon.stub(salesModel, 'insertSale').resolves(1);
+    sinon.stub(salesModel, 'getBySaleId').resolves(salesErrorDataBase);
+    sinon.stub(salesModel, 'insertSalesProducts').resolves();
+    const inputData = [
+      {
+        productId: 9999,
+        quantity: 15,
+      },
+    ];
+    const responseData = { message: 'Product not found' };
+    const response = await salesServices.addSale(inputData);
+    expect(response.status).equal(404);
+    expect(response.data).deep.equal(responseData);
+  });
   afterEach(function () {
     return sinon.restore();
   });
